@@ -10,7 +10,12 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
-int socket(int domain, int type, int protocol);
+#include "main.h"
+
+int getaddrinfo(const char *node,     // e.g. "www.example.com" or IP, hostname to connect
+                const char *service,  // e.g. "http" or port number
+                const struct addrinfo *hints,
+                struct addrinfo **res);
 
 int main(int argc, char *argv[])
 {
