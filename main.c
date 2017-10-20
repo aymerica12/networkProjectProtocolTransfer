@@ -4,9 +4,20 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include "main.h"
+
 int socket(int domain, int type, int protocol);
+int bind(int sockfd, struct sockaddr *my_addr, int addrlen);
 int s;
 struct addrinfo hints, *res;
+
+// do the lookup
+// [pretend we already filled out the "hints" struct]
+
+int getaddrinfo(const char *node,     // e.g. "www.example.com" or IP, hostname to connect
+                const char *service,  // e.g. "http" or port number
+                const struct addrinfo *hints,
+                struct addrinfo **res);
+
 
 // do the lookup
 // [pretend we already filled out the "hints" struct]
@@ -19,19 +30,22 @@ getaddrinfo("www.example.com", "http", &hints, &res);
 
 s = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
 
-
 int main()
 {
-
-    printf("Hello world!\n");
+    memset(&hints, 0, sizeof hints);
+    hints.ai_family = AF_UNSPEC;  // use IPv4 or IPv6, whichever
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;     // fill in my IP for me
+    getaddrinfo(NULL, "3490", &hints, &res);
+    // make a socket:
+    sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    // bind it to the port we passed in to getaddrinfo():
+    bind(sockfd, res->ai_addr, res->ai_addrlen);
     return 0;
 }
 
 
-int getaddrinfo(const char *node,     // e.g. "www.example.com" or IP, hostname to connect
-                const char *service,  // e.g. "http" or port number
-                const struct addrinfo *hints,
-                struct addrinfo **res);
+
 
 
 void ipv4ToBinary(){
