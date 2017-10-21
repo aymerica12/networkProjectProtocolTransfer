@@ -33,13 +33,10 @@ void readFileToSend(char *dt, char nameFile[]){
 
     if (fichier != NULL)
     {
-        while (fgets(dt, TAILLE_MAX, fichier) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
-        {
-            printf("%s", chaine); // On affiche la chaîne qu'on vient de lire
-        }
+        if(fgets(dt, TAILLE_MAX, fichier) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL){
+            perror("readFile : get");
 
         fclose(fichier);
-        return chaine;
     }
 
 }
@@ -67,22 +64,39 @@ unsigned short csum(unsigned short *ptr,int nbytes)
 
     return(answer);
 }
-void manageInput(char $argv){
-    while
 
-}
 int main(int argc, char *argv[])
 {
+    char packet[4096] , source_ip[32] , *payload , *pseudogram;
+    char[20] filename;
     printf("taille %d \n", argc);
     printf("arg1 %s \n",argv[1]);
     printf("arg2 %s \n",argv[2]);
-    int compt;
-    for(compt = 10; compt< argc; compt++){
-        printf("\n numero %d , argument %s",compt,argc[compt]);
+    int compt = 1;
+    while(compt = argc){
+        printf("\n numero %d , argument %s",compt,argv[compt]);
+
+        switch(argv[compt]){
+            case "<":
+                printf("\n > détecté");
+                filename = argv[++compt];
+                break;
+            case "-f":
+                printf("\n -f détecté");
+                filename = argv[++compt];
+                break;
+
+            case "2>":
+                printf("\n fichier log");
+                break;
+            default :
+                source_ip = argv[compt];
+                char[] port = argv[++compt];
+        }
+        compt++;
     }
 
 
-    char packet[4096] , source_ip[32] , *payload , *pseudogram;
 
 
     if (argc != 2) {
