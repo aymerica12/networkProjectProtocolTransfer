@@ -68,7 +68,7 @@ unsigned short csum(unsigned short *ptr,int nbytes)
 int main(int argc, char *argv[])
 {
     char packet[4096] , source_ip[32] , *payload , *pseudogram;
-    char[20] filename;
+    char filename[20];
     printf("taille %d \n", argc);
     printf("arg1 %s \n",argv[1]);
     printf("arg2 %s \n",argv[2]);
@@ -76,26 +76,21 @@ int main(int argc, char *argv[])
     while(compt = argc){
         printf("\n numero %d , argument %s",compt,argv[compt]);
 
-        switch(argv[compt]){
-            case "<":
+        if(argv[compt] = "<"){
                 printf("\n > détecté");
                 filename = argv[++compt];
-                break;
-            case "-f":
+        } else if(argv[compt] = "-f"){
                 printf("\n -f détecté");
                 filename = argv[++compt];
-                break;
-
-            case "2>":
+        } else if(argv[compt] = "2>"){
                 printf("\n fichier log");
-                break;
-            default :
-                source_ip = argv[compt];
-                char[] port = argv[++compt];
+        } else {
+            strcpy(source_ip, argv[compt]);
+            char port[] = argv[++compt];
         }
         compt++;
     }
-
+    printf("\n %s",source_ip);
 
 
 
