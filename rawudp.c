@@ -76,13 +76,13 @@ int main(int argc, char *argv[])
     while(compt = argc){
         printf("\n numero %d , argument %s",compt,argv[compt]);
 
-        if(argv[compt] = "<"){
+        if(strcmp(argv[compt], "<")){
                 printf("\n > détecté");
                 strcpy(filename,argv[++compt]);
-        } else if(argv[compt] = "-f"){
+        } else if(strcmp(argv[compt],"-f")){
                 printf("\n -f détecté");
                 strcpy(filename,argv[++compt]);
-        } else if(argv[compt] = "2>"){
+        } else if(strcmp(argv[compt],"2>")){
                 printf("\n fichier log");
         } else {
             strcpy(source_ip, argv[compt]);
