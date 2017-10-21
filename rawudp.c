@@ -26,20 +26,20 @@ struct pseudo_header
 /*
     Generic checksum calculation function
 */
-private char readFileToSend(char nameFile){
+void readFileToSend(char *dt, char nameFile[]){
     FILE* fichier = NULL;
-    char chaine[TAILLE_MAX] = "";
 
     fichier = fopen(nameFile, "r");
 
     if (fichier != NULL)
     {
-        while (fgets(chaine, TAILLE_MAX, fichier) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+        while (fgets(dt, TAILLE_MAX, fichier) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
         {
             printf("%s", chaine); // On affiche la chaîne qu'on vient de lire
         }
 
         fclose(fichier);
+        return chaine;
     }
 
 }
@@ -67,14 +67,23 @@ unsigned short csum(unsigned short *ptr,int nbytes)
 
     return(answer);
 }
+void manageInput(char $argv){
+    while
 
+}
 int main(int argc, char *argv[])
 {
     printf("taille %d \n", argc);
     printf("arg1 %s \n",argv[1]);
     printf("arg2 %s \n",argv[2]);
+    int compt;
+    for(compt = 10; compt< argc; compt++){
+        printf("\n numero %d , argument %s",compt,argc[compt]);
+    }
+
 
     char packet[4096] , source_ip[32] , *payload , *pseudogram;
+
 
     if (argc != 2) {
         fprintf(stderr,"usage: talker hostname message\n");
@@ -105,8 +114,10 @@ int main(int argc, char *argv[])
 
     //Data part pointe a la fin du packet udph
     payload = packet + sizeof(struct iphdr) + sizeof(struct udphdr);
-    readFileToSend(argv[2]);
-    strcpy(payload , "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    char dt[512] = {0};
+    readFileToSend( dt , argv[2]);
+    strcpy(payload , dt);
 
     //some address resolution
     strcpy(source_ip , "192.168.159.138");
