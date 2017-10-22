@@ -11,7 +11,7 @@
 #include<arpa/inet.h> //getsockname
 #include<unistd.h>    //close
 
-int main ( int argc , char *argv[] )
+void returnMyIp(char *source_ip)
 {
     const char* google_dns_server = "8.8.8.8";
     int dns_port = 53;
@@ -43,6 +43,7 @@ int main ( int argc , char *argv[] )
     if(p != NULL)
     {
         printf("Local ip is : %s \n" , buffer);
+        strcpy(source_ip,buffer);
     }
     else
     {

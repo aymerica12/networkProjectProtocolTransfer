@@ -9,6 +9,7 @@
 #include<netinet/udp.h>   //Provides declarations for udp header
 #include<netinet/ip.h>    //Provides declarations for ip header
 #include <arpa/inet.h>
+#include "selectserver.c"
 #define TAILLE_MAX 512
 
 /*
@@ -37,7 +38,7 @@ void readFileToSend(char *dt, char nameFile[]){
             perror("readFile : get");
 
 
-        printf("\n contenu packet/s",dt);
+        printf("\n contenu packet : \n %s",dt);
         long t = ftell(fichier);
         printf("\n %ld",t);
 
@@ -128,7 +129,7 @@ int main(int argc, char *argv[])
 
     struct sockaddr_in sin;
     struct pseudo_header psh;
-    strcpy(source_ip,"192.168.159.138");
+    returnMyIp(source_ip);
     //Data part pointe a la fin du packet udph
     payload = packet + sizeof(struct iphdr) + sizeof(struct udphdr);
 
