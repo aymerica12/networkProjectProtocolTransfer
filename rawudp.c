@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     char packet[4096] , source_ip[32], dest_ip[32] , port[10], filename[20];
 
     int compt;
-    for(compt =1; compt <= argc; compt ++){
+    for(compt =1; compt < argc; compt ++){
         printf("\n numero %d , argument %s",compt,argv[compt]);
 
 
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
                 printf("\n fichier log");
         } else {
             strcpy(dest_ip, argv[compt]);
-            port = strtol(argv[++compt], &ptr, 10);
+            port = (int) atol(argv[++compt]);
         }
     }
     printf("\n %s",dest_ip);
@@ -124,13 +124,14 @@ int main(int argc, char *argv[])
 
     struct sockaddr_in sin;
     struct pseudo_header psh;
-
+    strcpy(source_ip,"192.168.159.138");
     //Data part pointe a la fin du packet udph
     payload = packet + sizeof(struct iphdr) + sizeof(struct udphdr);
 
     char dt[512] = {0};
     readFileToSend( dt , argv[2]);
     strcpy(payload , dt);
+    printf("\n payload : %s",payload);
 
 
     sin.sin_family = AF_INET;
@@ -147,7 +148,7 @@ int main(int argc, char *argv[])
     iph->ttl = 255;
     iph->protocol = IPPROTO_UDP;
     iph->check = 0;      //Set to 0 before calculating checksum
-    iph->saddr = inet_addr ( "192.168.159.138" );    //Spoof the source ip address
+    iph->saddr = inet_addr ( source_ip );    //Spoof the source ip address
     iph->daddr = sin.sin_addr.s_addr;
 
     //Ip checksum
