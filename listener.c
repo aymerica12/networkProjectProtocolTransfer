@@ -13,7 +13,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#define MYPORT "5050"    // the port users will be connecting to
+#define MYPORT "4950"    // the port users will be connecting to
 
 #define MAXBUFLEN 100
 
@@ -81,10 +81,7 @@ int main(void)
         exit(1);
     }
 
-    printf("listener: got packet from %s\n",
-        inet_ntop(their_addr.ss_family,
-            get_in_addr((struct sockaddr *)&their_addr),
-            s, sizeof s));
+    printf("listener: got packet from %s\n", inet_ntop(their_addr.ss_family,get_in_addr((struct sockaddr *)&their_addr),s, sizeof s));
     printf("listener: packet is %d bytes long\n", numbytes);
     buf[numbytes] = '\0';
     printf("listener: packet contains \"%s\"\n", buf);

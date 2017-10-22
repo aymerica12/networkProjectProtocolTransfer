@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    char  *payload , *pseudogram;
+    char  *payload , *pseudogram, *ptr;
     char packet[4096] , source_ip[32], dest_ip[32] , port[10], filename[20];
 
     int compt;
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
                 printf("\n fichier log");
         } else {
             strcpy(dest_ip, argv[compt]);
-            port = atoi(argv[++compt]);
+            port = strtol(argv[++compt], &ptr, 10);
         }
     }
     printf("\n %s",dest_ip);
