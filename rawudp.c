@@ -36,6 +36,8 @@ void readFileToSend(char *dt, char nameFile[]){
         if(fgets(dt, TAILLE_MAX, fichier) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL){
             perror("readFile : get");
 
+        t = ftell(fichier);
+        printf("\n %ln",t);
         fclose(fichier);
     }
 
@@ -67,37 +69,39 @@ unsigned short csum(unsigned short *ptr,int nbytes)
 
 int main(int argc, char *argv[])
 {
-    char packet[4096] , source_ip[32] , port[10], *payload , *pseudogram;
-    char filename[20];
-    printf("taille %d \n", argc);
-    printf("arg1 %s \n",argv[1]);
-    printf("arg2 %s \n",argv[2]);
-    int compt = 1;
-    while(compt = argc){
-        printf("\n numero %d , argument %s",compt,argv[compt]);
-
-        if(strcmp(argv[compt], "<")){
-                printf("\n > détecté");
-                strcpy(filename,argv[++compt]);
-        } else if(strcmp(argv[compt],"-f")){
-                printf("\n -f détecté");
-                strcpy(filename,argv[++compt]);
-        } else if(strcmp(argv[compt],"2>")){
-                printf("\n fichier log");
-        } else {
-            strcpy(source_ip, argv[compt]);
-            strcpy(port,argv[++compt]);
-        }
-        compt++;
-    }
-    printf("\n %s",source_ip);
-
-
-
-    if (argc != 2) {
+    if (argc < 2) {
         fprintf(stderr,"usage: talker hostname message\n");
         exit(1);
     }
+
+    char  *payload , *pseudogram;
+    char packet[4096] , source_ip[32], dest_ip[32] , port[10], filename[20];
+
+    int compt;
+    for(compt =1; compt <= argc; compt ++){
+        printf("\n numero %d , argument %s",compt,argv[compt]);
+
+
+        if(strcmp(argv[compt], "<") == 0){
+                strcpy(filename,argv[++compt]);
+
+        } else if(strcmp(argv[compt],"-f") == 0){
+                strcpy(filename,argv[++compt]);
+
+        } else if(strcmp(argv[compt],"2>") == 0){
+
+                printf("\n fichier log");
+        } else {
+            strcpy(dest_ip, argv[compt]);
+            strcpy(port,argv[++compt]);
+        }
+    }
+    printf("\n %s",dest_ip);
+    printf("\n %s",filename);
+    printf("\n %s",port);
+
+
+
 
     int s = socket (AF_INET, SOCK_RAW, IPPROTO_RAW);
 
@@ -128,12 +132,10 @@ int main(int argc, char *argv[])
     readFileToSend( dt , argv[2]);
     strcpy(payload , dt);
 
-    //some address resolution
-    strcpy(source_ip , "192.168.159.138");
 
     sin.sin_family = AF_INET;
     sin.sin_port = htons(80);
-    sin.sin_addr.s_addr = inet_addr("192.168.159.136");
+    sin.sin_addr.s_addr = inet_addr(dest_ip);
 
     //Fill in the IP Header
     iph->ihl = 5;
@@ -145,15 +147,15 @@ int main(int argc, char *argv[])
     iph->ttl = 255;
     iph->protocol = IPPROTO_UDP;
     iph->check = 0;      //Set to 0 before calculating checksum
-    iph->saddr = inet_addr ( source_ip );    //Spoof the source ip address
+    iph->saddr = inet_addr ( "192.168.159.138" );    //Spoof the source ip address
     iph->daddr = sin.sin_addr.s_addr;
 
     //Ip checksum
     iph->check = csum ((unsigned short *) packet, iph->tot_len);
 
     //UDP header
-    udph->source = htons (5050);
-    udph->dest = htons (5050);
+    udph->source = htons (port);
+    udph->dest = htons (port);
     udph->len = htons(8 + strlen(payload)); //tcp header size
     udph->check = 0; //leave checksum 0 now, filled later by pseudo header
 
