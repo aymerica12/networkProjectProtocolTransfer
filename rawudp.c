@@ -128,18 +128,7 @@ int main(int argc, char *argv[])
 
     struct sockaddr_in sin;
     struct pseudo_header psh;
-
-     fd = socket(AF_INET, SOCK_DGRAM, 0);
-
- /* I want to get an IPv4 IP address */
- ifr.ifr_addr.sa_family = AF_INET;
-
- /* I want IP address attached to "eth0" */
-    strncpy(ifr.ifr_name, "eth0", IFNAMSIZ-1);
-
-    ioctl(fd, SIOCGIFADDR, &ifr);
-    close(fd);
-    strcpy(source_ip,inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr));
+    strcpy(source_ip,"192.168.159.138");
     //Data part pointe a la fin du packet udph
     payload = packet + sizeof(struct iphdr) + sizeof(struct udphdr);
 
