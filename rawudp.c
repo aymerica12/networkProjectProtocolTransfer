@@ -36,7 +36,7 @@ void readFileToSend(char *dt, char nameFile[]){
         if(fgets(dt, TAILLE_MAX, fichier) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL){
             perror("readFile : get");
 
-        t = ftell(fichier);
+        long t = ftell(fichier);
         printf("\n %ln",t);
         fclose(fichier);
     }
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
                 printf("\n fichier log");
         } else {
             strcpy(dest_ip, argv[compt]);
-            strcpy(port,argv[++compt]);
+            port = atoi(argv[++compt]);
         }
     }
     printf("\n %s",dest_ip);
