@@ -36,8 +36,11 @@ void readFileToSend(char *dt, char nameFile[]){
         if(fgets(dt, TAILLE_MAX, fichier) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL){
             perror("readFile : get");
 
+
+        printf("\n contenu packet/s",dt);
         long t = ftell(fichier);
-        printf("\n %ln",t);
+        printf("\n %ld",t);
+
         fclose(fichier);
     }
 
@@ -75,9 +78,9 @@ int main(int argc, char *argv[])
     }
 
     char  *payload , *pseudogram, *ptr;
-    char packet[4096] , source_ip[32], dest_ip[32] , port[10], filename[20];
+    char packet[4096] , source_ip[32], dest_ip[32] , filename[20];
 
-    int compt;
+    int compt, port;
     for(compt =1; compt < argc; compt ++){
         printf("\n numero %d , argument %s",compt,argv[compt]);
 
@@ -98,7 +101,7 @@ int main(int argc, char *argv[])
     }
     printf("\n %s",dest_ip);
     printf("\n %s",filename);
-    printf("\n %s",port);
+    printf("\n %i",port);
 
 
 
