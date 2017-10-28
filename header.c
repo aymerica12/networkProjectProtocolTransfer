@@ -24,35 +24,35 @@ struct __attribute__((__packed__)) pkt {
     uint32_t crc2;
 }pkt;
 
-uint8_t pkt_get_window(iph *pkt) {
+uint8_t pkt_get_window(pkt *pkt) {
     return pkt->header.window;
 }
 
-uint8_t pkt_get_seqnum(iph *pkt) {
+uint8_t pkt_get_seqnum(pkt *pkt) {
     return pkt->header.seqnum;
 }
 
-uint16_t pkt_get_length(iph *pkt) {
+uint16_t pkt_get_length(pkt *pkt) {
     return ntohs(pkt->header.length);
 }
 
-uint32_t pkt_get_timestamp(iph *pkt) {
+uint32_t pkt_get_timestamp(pkt *pkt) {
     return pkt->header.timestamp;
 }
 
-uint32_t pkt_get_crc1(iph *pkt) {
+uint32_t pkt_get_crc1(pkt *pkt) {
     return pkt->header.crc1;
 }
 
-uint32_t pkt_get_crc2(iph *pkt) {
+uint32_t pkt_get_crc2(pkt *pkt) {
     return pkt->crc2;
 }
 
-uint8_t pkt_get_tr(iph *pkt) {
+uint8_t pkt_get_tr(pkt *pkt) {
     return pkt->header.tr;
 }
 
-int pkt_set_windows(iph *pkt,uint8_t window ){
+int pkt_set_windows(pkt *pkt,uint8_t window ){
         if (window > MAX_WINDOW) {
         return -1;
     } else {
@@ -61,7 +61,7 @@ int pkt_set_windows(iph *pkt,uint8_t window ){
     }
 }
 
-int pkt_set_type(iph *pkt,uint8_t type ){
+int pkt_set_type(pkt *pkt,uint8_t type ){
     if (type != PTYPE_DATA && type != PTYPE_ACK){
         return -1;
     } else{
@@ -70,12 +70,12 @@ int pkt_set_type(iph *pkt,uint8_t type ){
     } 
 }
 
-int pkt_set_seqnum(iph *pkt, const uint8_t seqnum ){
+int pkt_set_seqnum(pkt *pkt, const uint8_t seqnum ){
         pkt->header.seqnum = seqnum;
         return 1;
 }
 
-int pkt_set_length(iph *pkt, uint16_t length){
+int pkt_set_length(pkt *pkt, uint16_t length){
     if (length > MAX_PAYLOAD) {
         return -1;
     } else {
