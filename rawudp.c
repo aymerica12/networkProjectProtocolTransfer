@@ -10,7 +10,10 @@
 #include<netinet/ip.h>    //Provides declarations for ip header
 #include <arpa/inet.h>
 #include "selectserver.c"
+#include "header.c"
 #define TAILLE_MAX 512
+#define PCKT_LEN 4096
+
 
 /*
     96 bit (12 bytes) pseudo header needed for udp header checksum calculation
@@ -79,9 +82,19 @@ int main(int argc, char *argv[])
     }
 
     char  *payload , *pseudogram, *ptr;
-    char packet[4096] , source_ip[32], dest_ip[32] , filename[20];
+    char  source_ip[32], dest_ip[32] , filename[20];
+    char packet[4096] = {0};
+    struct pkt pkt;
+
+    if(pkt_set_seqnum(&pkt,5)){
+        printf("\n nouveau seqnum");
+        printf("\n seq : %i\n", pkt_get_seqnum(&pkt));
+    } else{
+        printf("pas de seqnum");
+    }
 
     int compt, port;
+
     for(compt =1; compt < argc; compt ++){
         printf("\n numero %d , argument %s",compt,argv[compt]);
 
@@ -119,8 +132,6 @@ int main(int argc, char *argv[])
 
 
     //zero out the packet buffer
-    memset (packet, 0, 4096);
-
     //IP header
     struct iphdr *iph = (struct iphdr *) packet;
 
