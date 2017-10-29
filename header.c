@@ -79,3 +79,17 @@ int pkt_set_length(pkt* pkt, uint16_t length){
         return 0;
     }
 }
+int pkt_set_timestamp(pkt* pkt, uint32_t timestamp){
+    pkr->header.timestamp = timestamp;
+    return 1;
+}
+
+int pkt_set_crc1(pkt* pkt, uint32_t crc1){
+    pkt->header.crc1 = crc1;
+    return 1;
+}
+ 
+int pkt_set_crc2(pkt* pkt, uint32_t crc2){
+    pkt->header.crc2 = crc2;
+    return 1;
+}

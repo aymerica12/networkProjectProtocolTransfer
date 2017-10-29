@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     char  *payload , *pseudogram, *ptr;
     char  source_ip[32], dest_ip[32] , filename[20];
     char packet[4096] = {0};
-    struct pkt pkt;
+    pkt pkt;
 
     if(pkt_set_seqnum(&pkt,5)){
         printf("\n nouveau seqnum");
@@ -171,6 +171,10 @@ int main(int argc, char *argv[])
     iph->check = csum ((unsigned short *) packet, iph->tot_len);
 
     //UDP header
+    udph->type = 1;
+    udph->tr = 1;
+    udph->window = 5;
+    udph->seqnum = htons(50);
     udph->source = htons (port);
     udph->dest = htons (port);
     udph->len = htons(8 + strlen(payload)); //tcp header size
@@ -190,8 +194,8 @@ int main(int argc, char *argv[])
     memcpy(pseudogram + sizeof(struct pseudo_header) , udph , sizeof(struct udphdr) + strlen(payload));
 
     udph->check = csum( (unsigned short*) pseudogram , psize);
-
-    //while (1)
+int count;
+for(count = 1; count <=20; count++)
     {
         //Send the packet
         if (sendto (s, packet, iph->tot_len ,  0, (struct sockaddr *) &sin, sizeof (sin)) < 0)
