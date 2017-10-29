@@ -1,10 +1,13 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <arpa/inet.h>
+
 #include <sys/socket.h>
 #include <netinet/ip.h>
 #include <netinet/udp.h>
-#include "header.c"
 
 // The packet length
 #define PCKT_LEN 8192
