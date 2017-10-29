@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX_WINDOW 5
-#define MAX_PAYLOAD 
+#define MAX_PAYLOAD 512
 #define PTYPE_DATA 1
 #define PTYPE_ACK 2
 #define PTYPE_NACK 3
