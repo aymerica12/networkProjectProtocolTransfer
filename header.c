@@ -5,6 +5,7 @@
 #define PTYPE_DATA 1
 #define PTYPE_ACK 2
 #define PTYPE_NACK 3
+#define MAX_WINDOW 5
 
 typedef struct __attribute__((__packed__)) pkt {
     struct {
@@ -80,7 +81,7 @@ int pkt_set_length(pkt* pkt, uint16_t length){
     }
 }
 int pkt_set_timestamp(pkt* pkt, uint32_t timestamp){
-    pkr->header.timestamp = timestamp;
+    pkt->header.timestamp = timestamp;
     return 1;
 }
 
@@ -90,6 +91,6 @@ int pkt_set_crc1(pkt* pkt, uint32_t crc1){
 }
  
 int pkt_set_crc2(pkt* pkt, uint32_t crc2){
-    pkt->header.crc2 = crc2;
+    pkt->crc2 = crc2;
     return 1;
 }

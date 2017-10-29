@@ -31,7 +31,7 @@ struct pseudo_header
     Generic checksum calculation function
 */
 void readFileToSend(char *dt, char nameFile[]){
-    typedef struct pack payload{
+    typedef struct pack{
             int seq;
             char* packet[512]; 
     };
@@ -57,7 +57,7 @@ void readFileToSend(char *dt, char nameFile[]){
         int mod = t % 5;
         while( div != -1){
             printf("\n %i",div);
-        //    payload[div].packet = ;
+           //payload[div].packet = ;
 
         }
         fclose(fichier);
@@ -188,10 +188,7 @@ int main(int argc, char *argv[])
     iph->check = csum ((unsigned short *) packet, iph->tot_len);
 
     //UDP header
-    udph->type = 1;
-    udph->tr = 1;
-    udph->window = 5;
-    udph->seqnum = htons(50);
+
     udph->source = htons (port);
     udph->dest = htons (port);
     udph->len = htons(8 + strlen(payload)); //tcp header size
