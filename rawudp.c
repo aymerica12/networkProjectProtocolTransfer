@@ -31,6 +31,10 @@ struct pseudo_header
     Generic checksum calculation function
 */
 void readFileToSend(char *dt, char nameFile[]){
+    typedef struct pack payload{
+            int seq;
+            char* packet[512]; 
+    };
     FILE* fichier = NULL;
 
     fichier = fopen(nameFile, "r");
@@ -42,13 +46,26 @@ void readFileToSend(char *dt, char nameFile[]){
 
 
         printf("\n contenu packet : \n %s",dt);
-        long t = ftell(fichier);
-        printf("\n %ld",t);
+        
 
+        int t = (int)ftell(fichier);
+        printf("\n %i",t);
+        int div = t / 5;
+        
+        pack payload[++div];
+
+        int mod = t % 5;
+        while( div != -1){
+            printf("\n %i",div);
+        //    payload[div].packet = ;
+
+        }
         fclose(fichier);
     }
 
 }
+
+
 
 unsigned short csum(unsigned short *ptr,int nbytes)
 {
@@ -194,8 +211,8 @@ int main(int argc, char *argv[])
     memcpy(pseudogram + sizeof(struct pseudo_header) , udph , sizeof(struct udphdr) + strlen(payload));
 
     udph->check = csum( (unsigned short*) pseudogram , psize);
-int count;
-for(count = 1; count <=20; count++)
+
+    //while (1)
     {
         //Send the packet
         if (sendto (s, packet, iph->tot_len ,  0, (struct sockaddr *) &sin, sizeof (sin)) < 0)
