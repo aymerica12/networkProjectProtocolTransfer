@@ -30,10 +30,12 @@ struct pseudo_header
 /*
     Generic checksum calculation function
 */
-int readFileToSend(char nameFile[]){
+char * readFileToSend(int * nbrPacket,char nameFile[]){
     FILE* fichier = NULL;
     int div = 0;
     char dt[];
+    char * tabPayload;
+
     fichier = fopen(nameFile, "r");
 
     if (fichier != NULL)
@@ -46,27 +48,35 @@ int readFileToSend(char nameFile[]){
         
 
         int t = (int)ftell(fichier);
-        printf("\n %i",t);
+        printf("\n longueur fichier : %i",t);
+
         div = t / 5;
         int mod = t % 5;
-        
-        pack payload[++div];
-        int oct = 0;
-        printf("seg ");
-        while( div != 0){
-            printf("\n compt :  %i",div);
+        if(mod != 0){
+            div++;  //--> si le modulo n'est pas égal à 0, on incrémente le nombre de packet
+        } 
+
+        tabPayload = malloc(5 * div);
+       // pack payload[div];
+
+        int oct, cpt;
+        for(cpt = 0; cpt <= div; cpt++){
+            printf("\n compt :  %i",cpt);
 
             char* buffer = malloc(5);
             fseek(fichier, oct, SEEK_SET);
             fread(buffer, 5, 1, fichier);
-            payload[div].packet = buffer;           
+
+           // payload[div].packet = buffer; 
+            tabPayload[cpt] = buffer;          
  
-            printf(" packet : %s\n", payload[div].packet);
+            printf(" packet : %s\n", tabPayload[cpt]);
             oct = oct + 5 ;
-            div--;
         }
+
         fclose(fichier);
-        return div;
+        nbrPacket = div;
+        return tabPayload;
     }
 
 }
@@ -168,8 +178,9 @@ int main(int argc, char *argv[])
     payload = packet + sizeof(struct iphdr) + sizeof(struct udphdr);
 
    // char dt[512] = {0};
-    int nbrPacket = readFileToSend(  filename);
-    printf("\n payload : %s",payload);
+    int* nbrPacket; 
+    char*  maChaine = readFileToSend( nbrPacket, filename);
+    printf("\n payload : %s",maChaine[3]);
 
 
     sin.sin_family = AF_INET;
@@ -205,7 +216,8 @@ int main(int argc, char *argv[])
     psh.placeholder = 0;
     psh.protocol = IPPROTO_UDP;
     for(nbrPacket; nbrPacket != -1; nbrPacket--){
-        strcpy(payload , payload[nbrPacket].packet);
+
+        strcpy(payload , pack[nbrPacket].packet);
         psh.udp_length = htons(sizeof(struct udphdr) + strlen(payload) );
         int psize = sizeof(struct pseudo_header) + sizeof(struct udphdr) + strlen(payload);
         pseudogram = malloc(psize);
