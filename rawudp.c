@@ -34,7 +34,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
     FILE* fichier = NULL;
     int div = 0;
     char* dt;
-    char * tabPayload;
+    char * tabPayload[];
 
     fichier = fopen(nameFile, "r");
 
