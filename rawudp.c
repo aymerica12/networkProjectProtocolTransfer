@@ -34,7 +34,6 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
     FILE* fichier = NULL;
     int div = 0;
     char* dt;
-    char * tabPayload[];
 
     fichier = fopen(nameFile, "r");
 
@@ -56,7 +55,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
             div++;  //--> si le modulo n'est pas égal à 0, on incrémente le nombre de packet
         } 
 
-        tabPayload = malloc(5 * div);
+        char * tabPayload = malloc(5 * div);
        // pack payload[div];
 
         int oct, cpt;
