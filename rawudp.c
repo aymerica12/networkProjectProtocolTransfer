@@ -31,6 +31,7 @@ struct pseudo_header
     Generic checksum calculation function
 */
 char * readFileToSend(int * nbrPacket,char nameFile[]){
+    printf("suis ou .?\n");
     FILE* fichier = NULL;
     int div = 0;
     char* dt;
