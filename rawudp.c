@@ -56,7 +56,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         } 
 
         char* tabPayload = malloc(5 * div);
-       // pack payload[div];
+        pack payload[div];
 
         int oct = 0;
         int cpt =0;
