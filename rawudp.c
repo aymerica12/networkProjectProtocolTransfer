@@ -68,8 +68,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
 
            // payload[div].packet = buffer; 
             //printf("%s\n", *buffer);
-            strcpy(tabPayload[cpt],*buffer);
- 
+            strcpy(tabPayload[cpt],buffer);
             //printf(" packet : %d\n", tabPayload[cpt]);
             oct = oct + 5 ;
         }
