@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
 
         udph->check = csum( (unsigned short*) pseudogram , psize);
 
-        while (1)
+    //    while (1)
         {
             if (sendto (s, packet, iph->tot_len ,  0, (struct sockaddr *) &sin, sizeof (sin)) < 0)
             {
