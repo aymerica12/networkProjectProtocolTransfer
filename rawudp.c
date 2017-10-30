@@ -67,7 +67,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
             fread(buffer, 5, 1, fichier);
 
            // payload[div].packet = buffer; 
-           printf("%s\n", buffer);
+           printf("%s\n", *buffer);
             //tabPayload[cpt] = *buffer;          
  
             printf(" packet : %d\n", tabPayload[cpt]);
