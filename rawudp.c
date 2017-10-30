@@ -58,7 +58,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         char* tabPayload = malloc(5 * div);
        // pack payload[div];
 
-        int oct = 0
+        int oct = 0;
         int cpt =0;
         while(cpt <= div){
             printf("\n compt :  %i",cpt);
