@@ -54,7 +54,7 @@ void readFileToSend(char *dt, char nameFile[]){
         int div = t / 5;
 
         fseek(fichier, 0, SEEK_SET);
-        fread(buffer, 10, div, fichier);
+        fread(buffer, 10, 1, fichier);
         printf("%s\n", buffer);
         
         pack payload[++div];
