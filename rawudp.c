@@ -55,7 +55,7 @@ void readFileToSend(char *dt, char nameFile[]){
         
         pack payload[++div];
         int oct = 0;
-
+        printf("seg ");
         while( div != 0){
             printf("\n %i",div);
 
