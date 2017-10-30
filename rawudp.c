@@ -50,6 +50,8 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         printf("\n longueur fichier : %i",t);
 
         div = t / 5;
+        printf("%i\n", div);
+
         int mod = t % 5;
         if(mod != 0){
             div++;  //--> si le modulo n'est pas égal à 0, on incrémente le nombre de packet
@@ -57,7 +59,6 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
 
         char* tabPayload = malloc(5 * div);
         pack payload[div];
-        printf("%i\n", div);
         int oct = 0;
         int cpt =0;
         while(cpt <= div){
