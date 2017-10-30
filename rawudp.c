@@ -33,7 +33,7 @@ struct pseudo_header
 char * readFileToSend(int * nbrPacket,char nameFile[]){
     FILE* fichier = NULL;
     int div = 0;
-    char dt[];
+    char* dt;
     char * tabPayload;
 
     fichier = fopen(nameFile, "r");
@@ -70,12 +70,12 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
            // payload[div].packet = buffer; 
             tabPayload[cpt] = buffer;          
  
-            printf(" packet : %s\n", tabPayload[cpt]);
+            printf(" packet : %d\n", tabPayload[cpt]);
             oct = oct + 5 ;
         }
 
         fclose(fichier);
-        nbrPacket = div;
+        nbrPacket = &div;
         return tabPayload;
     }
 
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
    // char dt[512] = {0};
     int* nbrPacket; 
     char*  maChaine = readFileToSend( nbrPacket, filename);
-    printf("\n payload : %s",maChaine[3]);
+    printf("\n payload : %d",maChaine[3]);
 
 
     sin.sin_family = AF_INET;
@@ -217,7 +217,7 @@ int main(int argc, char *argv[])
     psh.protocol = IPPROTO_UDP;
     for(nbrPacket; nbrPacket != -1; nbrPacket--){
 
-        strcpy(payload , pack[nbrPacket].packet);
+      //  strcpy(payload , pack[nbrPacket].packet);
         psh.udp_length = htons(sizeof(struct udphdr) + strlen(payload) );
         int psize = sizeof(struct pseudo_header) + sizeof(struct udphdr) + strlen(payload);
         pseudogram = malloc(psize);
