@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
     psh.dest_address = sin.sin_addr.s_addr;
     psh.placeholder = 0;
     psh.protocol = IPPROTO_UDP;
-    for(nbrPacket; nbrPacket != -1; nbrPacket--){
+    //for(nbrPacket; nbrPacket != -1; nbrPacket--){
 
       //  strcpy(payload , pack[nbrPacket].packet);
         psh.udp_length = htons(sizeof(struct udphdr) + strlen(payload) );
@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
                 printf ("Packet Send. Length : %d \n" , iph->tot_len);
             }
         }
-}
+//}
     return 0;
 }
 
