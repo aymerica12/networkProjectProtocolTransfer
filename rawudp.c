@@ -56,10 +56,11 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         } 
 
         char* tabPayload = malloc(5 * div);
-        pack payload[div];
+       // pack payload[div];
 
-        int  cpt, oct =0;
-        for(cpt = 0; cpt <= div; cpt++){
+        int oct = 0
+        int cpt =0;
+        while(cpt <= div){
             printf("\n compt :  %i",cpt);
 
             char* buffer = malloc(5);
@@ -71,8 +72,9 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
            // strcpy(tabPayload[cpt],buffer);
             //printf(" packet : %d\n", tabPayload[cpt]);
             oct = oct + 5 ;
+            cpt++;
         }
-
+        printf("%s\n",payload[3].packet );
         fclose(fichier);
         nbrPacket = &div;
         return tabPayload;
