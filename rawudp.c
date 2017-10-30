@@ -37,7 +37,7 @@ void readFileToSend(char *dt, char nameFile[]){
             char* packet; 
     };
     FILE* fichier = NULL;
-
+    char buffer[100];
     fichier = fopen(nameFile, "r");
 
     if (fichier != NULL)
@@ -52,14 +52,19 @@ void readFileToSend(char *dt, char nameFile[]){
         int t = (int)ftell(fichier);
         printf("\n %i",t);
         int div = t / 5;
+
+        fseek(fichier, 0, SEEK_SET);
+        fread(buffer, 10, div, fichier);
+        printf("%s\n", buffer);
         
         pack payload[++div];
 
         int mod = t % 5;
-        while( div != -1){
+        while( div != 0){
             printf("\n %i",div);
-           //payload[div].packet = ;
 
+           //payload[div].packet = ;
+            div--;
         }
         fclose(fichier);
     }
