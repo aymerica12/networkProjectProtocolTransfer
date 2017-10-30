@@ -32,12 +32,11 @@ struct pseudo_header
 */
 void readFileToSend(char *dt, char nameFile[]){
     typedef struct pack pack;
-    typedef struct pack{
+    struct pack{
             int seq;
             char* packet; 
     };
     FILE* fichier = NULL;
-    char buffer[100];
     fichier = fopen(nameFile, "r");
 
     if (fichier != NULL)
@@ -52,18 +51,22 @@ void readFileToSend(char *dt, char nameFile[]){
         int t = (int)ftell(fichier);
         printf("\n %i",t);
         int div = t / 5;
-
-        fseek(fichier, 0, SEEK_SET);
-        fread(buffer, 10, 1, fichier);
-        printf("%s\n", buffer);
+        int mod = t % 5;
         
         pack payload[++div];
+        int oct = 0;
 
-        int mod = t % 5;
         while( div != 0){
             printf("\n %i",div);
 
-           //payload[div].packet = ;
+            char buffer = malloc(5);
+            fseek(fichier, oct, SEEK_SET);
+            fread(buffer, 5, 1, fichier);
+            payload[div].packet = &buffer;           
+            printf("%s\n", payload[div].packet);
+
+            //payload[div].packet = ;
+            oct = oct + 5 ;
             div--;
         }
         fclose(fichier);
