@@ -30,8 +30,10 @@ struct pseudo_header
 /*
     Generic checksum calculation function
 */
-void readFileToSend(char *dt, char nameFile[]){
+int readFileToSend(char nameFile[]){
     FILE* fichier = NULL;
+    int div = 0;
+    char dt[];
     fichier = fopen(nameFile, "r");
 
     if (fichier != NULL)
@@ -45,7 +47,7 @@ void readFileToSend(char *dt, char nameFile[]){
 
         int t = (int)ftell(fichier);
         printf("\n %i",t);
-        int div = t / 5;
+        div = t / 5;
         int mod = t % 5;
         
         pack payload[++div];
@@ -54,7 +56,7 @@ void readFileToSend(char *dt, char nameFile[]){
         while( div != 0){
             printf("\n compt :  %i",div);
 
-          char* buffer = malloc(5);
+            char* buffer = malloc(5);
             fseek(fichier, oct, SEEK_SET);
             fread(buffer, 5, 1, fichier);
             payload[div].packet = buffer;           
@@ -64,6 +66,7 @@ void readFileToSend(char *dt, char nameFile[]){
             div--;
         }
         fclose(fichier);
+        return div;
     }
 
 }
@@ -164,9 +167,8 @@ int main(int argc, char *argv[])
     //Data part pointe a la fin du packet udph
     payload = packet + sizeof(struct iphdr) + sizeof(struct udphdr);
 
-    char dt[512] = {0};
-    readFileToSend( dt , filename);
-    strcpy(payload , dt);
+   // char dt[512] = {0};
+    int nbrPacket = readFileToSend(  filename);
     printf("\n payload : %s",payload);
 
 
@@ -202,30 +204,30 @@ int main(int argc, char *argv[])
     psh.dest_address = sin.sin_addr.s_addr;
     psh.placeholder = 0;
     psh.protocol = IPPROTO_UDP;
-    psh.udp_length = htons(sizeof(struct udphdr) + strlen(payload) );
+    for(nbrPacket; nbrPacket != -1; nbrPacket--){
+        strcpy(payload , payload[nbrPacket].packet);
+        psh.udp_length = htons(sizeof(struct udphdr) + strlen(payload) );
+        int psize = sizeof(struct pseudo_header) + sizeof(struct udphdr) + strlen(payload);
+        pseudogram = malloc(psize);
 
-    int psize = sizeof(struct pseudo_header) + sizeof(struct udphdr) + strlen(payload);
-    pseudogram = malloc(psize);
+        memcpy(pseudogram , (char*) &psh , sizeof (struct pseudo_header));
+        memcpy(pseudogram + sizeof(struct pseudo_header) , udph , sizeof(struct udphdr) + strlen(payload));
 
-    memcpy(pseudogram , (char*) &psh , sizeof (struct pseudo_header));
-    memcpy(pseudogram + sizeof(struct pseudo_header) , udph , sizeof(struct udphdr) + strlen(payload));
+        udph->check = csum( (unsigned short*) pseudogram , psize);
 
-    udph->check = csum( (unsigned short*) pseudogram , psize);
-
-    //while (1)
-    {
-        //Send the packet
-        if (sendto (s, packet, iph->tot_len ,  0, (struct sockaddr *) &sin, sizeof (sin)) < 0)
+        while (1)
         {
-            perror("sendto failed");
+            if (sendto (s, packet, iph->tot_len ,  0, (struct sockaddr *) &sin, sizeof (sin)) < 0)
+            {
+                perror("sendto failed");
+            }
+            //Data send successfully
+            else
+            {
+                printf ("Packet Send. Length : %d \n" , iph->tot_len);
+            }
         }
-        //Data send successfully
-        else
-        {
-            printf ("Packet Send. Length : %d \n" , iph->tot_len);
-        }
-    }
-
+}
     return 0;
 }
 
