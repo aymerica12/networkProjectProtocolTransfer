@@ -31,11 +31,6 @@ struct pseudo_header
     Generic checksum calculation function
 */
 void readFileToSend(char *dt, char nameFile[]){
-    typedef struct pack pack;
-    struct pack{
-            int seq;
-            char* packet; 
-    };
     FILE* fichier = NULL;
     fichier = fopen(nameFile, "r");
 
@@ -57,15 +52,14 @@ void readFileToSend(char *dt, char nameFile[]){
         int oct = 0;
         printf("seg ");
         while( div != 0){
-            printf("\n %i",div);
+            printf("\n compt :  %i",div);
 
-           char* buffer = malloc(5);
+          char* buffer = malloc(5);
             fseek(fichier, oct, SEEK_SET);
             fread(buffer, 5, 1, fichier);
             payload[div].packet = buffer;           
-            printf("%s\n", payload[div].packet);
-
-            //payload[div].packet = ;*/
+ 
+            printf(" packet : %s\n", payload[div].packet);
             oct = oct + 5 ;
             div--;
         }

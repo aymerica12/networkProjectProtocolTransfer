@@ -6,6 +6,10 @@
 #define PTYPE_ACK 2
 #define PTYPE_NACK 3
 #define MAX_WINDOW 5
+    typedef struct pack{
+            int seq;
+            char* packet; 
+    }pack ;
 
 typedef struct __attribute__((__packed__)) pkt {
     struct {
