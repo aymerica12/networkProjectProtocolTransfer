@@ -64,7 +64,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
 
            // char* buffer = malloc(5);
             fseek(fichier, oct, SEEK_SET);
-            fread(tabPayload[cpt], 5, 1, fichier);
+            fread(&tabPayload[cpt], 5, 1, fichier);
 
            // payload[div].packet = buffer; 
             //tabPayload[cpt] = &buffer;          
