@@ -70,7 +70,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
             oct = oct + 5 ;
             printf("%i\n",oct );
         }
-        printf("%s\n",&tabPayload[3]);
+        printf("%s\n",tabPayload[3]);
         fclose(fichier);
         nbrPacket = &div;
         return *tabPayload;
@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
    // char dt[512] = {0};
     int* nbrPacket; 
     char*  maChaine = readFileToSend( nbrPacket, filename);
-    printf("\n payload : %s", maChaine[3]);
+    printf("\n payload : %s", *maChaine);
 
 
     sin.sin_family = AF_INET;
