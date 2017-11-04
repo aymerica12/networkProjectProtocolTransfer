@@ -69,10 +69,10 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
             fseek(fichier, oct, SEEK_SET);
             fread(buffer, 5, 1, fichier);
 
-           payload[div].packet = buffer; 
+           //payload[div].packet = buffer; 
             //printf("%s\n", *buffer);
-           // strcpy(tabPayload[cpt],buffer);
-            //printf(" packet : %d\n", tabPayload[cpt]);
+            strcpy(tabPayload[cpt],buffer);
+            printf(" packet : %d\n", tabPayload[cpt]);
             oct = oct + 5 ;
             cpt++;
         }
