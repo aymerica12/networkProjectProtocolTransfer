@@ -73,7 +73,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         printf("%s\n",tabPayload[3]);
         fclose(fichier);
         nbrPacket = &div;
-        return *tabPayload[div];
+        return tabPayload;
     }
 
 }
