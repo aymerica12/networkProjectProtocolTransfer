@@ -59,25 +59,23 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         } 
 
         char *tabPayload[div];
-        pack payload[div];
-        int oct = 0;
-        int cpt =0;
+        
 
+        int oct = 0;
+        int cpt;
         for(cpt = 0; cpt < div; cpt++){
             printf("\n compt :  %i",cpt);
             printf("\n div : %i",div);
+
             tabPayload[cpt] = malloc(5);
             fseek(fichier, oct, SEEK_SET);
-            fread(tabPayload[cpt], 5, 1, fichier);
 
-           //payload[div].packet = buffer; 
-            //printf("%s\n", *buffer);
-            // = buffer;
-          //  strcpy(tabPayload[cpt],*buffer);
+            fread(tabPayload[cpt], 5, 1, fichier);
             printf(" packet : %s \n",tabPayload[cpt]);
             oct = oct + 5 ;
+            printf("%i\n",oct );
         }
-        printf("%s\n",payload[3].packet );
+        printf("%s\n",payload[3].packet);
         fclose(fichier);
         nbrPacket = &div;
         return *tabPayload;
