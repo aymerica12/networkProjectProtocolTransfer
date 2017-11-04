@@ -64,7 +64,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         int cpt =0;
         while(cpt <= div){
             printf("\n compt :  %i",cpt);
-
+            printf("\n div : %i",div);
             char* buffer = malloc(5);
             fseek(fichier, oct, SEEK_SET);
             fread(buffer, 5, 1, fichier);
