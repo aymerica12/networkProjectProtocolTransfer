@@ -30,7 +30,7 @@ struct pseudo_header
 /*
     Generic checksum calculation function
 */
-char * readFileToSend(int * nbrPacket,char nameFile[]){
+char [] readFileToSend(int * nbrPacket,char nameFile[]){
     FILE* fichier = NULL;
     int div = 0;
     char dt[10000];
@@ -73,7 +73,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         printf("%s\n",tabPayload[3]);
         fclose(fichier);
         nbrPacket = &div;
-        return *tabPayload;
+        return tabPayload;
     }
 
 }
@@ -176,8 +176,8 @@ int main(int argc, char *argv[])
 
    // char dt[512] = {0};
     int* nbrPacket; 
-    char*  maChaine = readFileToSend( nbrPacket, filename);
-    printf("\n payload : %s", maChaine);
+    char[]  maChaine = readFileToSend( nbrPacket, filename);
+    printf("\n payload : %s", *maChaine);
 
 
     sin.sin_family = AF_INET;
