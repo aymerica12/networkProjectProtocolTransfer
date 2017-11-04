@@ -34,6 +34,7 @@ pack readFileToSend(int * nbrPacket,char nameFile[]){
     FILE* fichier = NULL;
     int div = 0;
     char dt[10000];
+    char buffer[5] = {0};
     printf("suis ou .?\n");
 
     fichier = fopen(nameFile, "r");
@@ -66,9 +67,9 @@ pack readFileToSend(int * nbrPacket,char nameFile[]){
         for(cpt = 0; cpt < div; cpt++){
 
       //      tabPayload[cpt] = malloc(5);
-            tabPayload.packet[cpt] = malloc(5);
             fseek(fichier, oct, SEEK_SET);
-            fread(tabPayload.packet[cpt], 5, 1, fichier);
+            fread(buffer, 5, 1, fichier);
+            strcpy(tabPayload.packet[cpt],buffer);
             oct = oct + 5 ;
             printf("%i\n",oct );
         }
