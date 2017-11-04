@@ -60,7 +60,6 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
 
         char *tabPayload[div];
         
-
         int oct = 0;
         int cpt;
         for(cpt = 0; cpt < div; cpt++){
@@ -74,7 +73,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         printf("%s\n",tabPayload[3]);
         fclose(fichier);
         nbrPacket = &div;
-        return *tabPayload;
+        return *tabPayload[div];
     }
 
 }
@@ -178,7 +177,7 @@ int main(int argc, char *argv[])
    // char dt[512] = {0};
     int* nbrPacket; 
     char*  maChaine = readFileToSend( nbrPacket, filename);
-    printf("\n payload : %d", *maChaine[3]);
+    printf("\n payload : %d", maChaine[3]);
 
 
     sin.sin_family = AF_INET;
