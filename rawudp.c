@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
    // char dt[512] = {0};
     int* nbrPacket; 
     char*  maChaine = readFileToSend( nbrPacket, filename);
-    printf("\n payload : %d",maChaine[3]);
+    printf("\n payload : %d", *maChaine[3]);
 
 
     sin.sin_family = AF_INET;
@@ -234,7 +234,7 @@ int main(int argc, char *argv[])
             //Data send successfully
             else
             {
-                printf ("Packet Send. Length : %d \n" , iph->tot_len);
+                printf ("\n Packet Send. Length : %d \n" , iph->tot_len);
             }
         }
 //}
