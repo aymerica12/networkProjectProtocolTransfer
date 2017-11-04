@@ -58,20 +58,21 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
             div++;  //--> si le modulo n'est pas égal à 0, on incrémente le nombre de packet
         } 
 
-        char tabPayload[div];
+        char *tabPayload[div];
         pack payload[div];
         int oct = 0;
         int cpt =0;
         while(cpt <= div){
             printf("\n compt :  %i",cpt);
             printf("\n div : %i",div);
-            char* buffer = malloc(5);
+            tabPayload[cpt] = malloc(5);
             fseek(fichier, oct, SEEK_SET);
-            fread(buffer, 5, 1, fichier);
+            fread(tabPayload[cpt], 5, 1, fichier);
 
            //payload[div].packet = buffer; 
             //printf("%s\n", *buffer);
-            strcpy(tabPayload[cpt],buffer);
+            // = buffer;
+          //  strcpy(tabPayload[cpt],*buffer);
             printf(" packet : %d\n", tabPayload[cpt]);
             oct = oct + 5 ;
             cpt++;
