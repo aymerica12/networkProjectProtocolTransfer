@@ -58,7 +58,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
             div++;  //--> si le modulo n'est pas égal à 0, on incrémente le nombre de packet
         } 
 
-        char tabPayload[div] = malloc(5 * div);
+        char tabPayload[div];
         pack payload[div];
         int oct = 0;
         int cpt =0;
