@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
    // char dt[512] = {0};
     int* nbrPacket; 
     char*  maChaine = readFileToSend( nbrPacket, filename);
-    printf("\n payload : %s", *maChaine);
+    printf("\n payload : %s", maChaine);
 
 
     sin.sin_family = AF_INET;
