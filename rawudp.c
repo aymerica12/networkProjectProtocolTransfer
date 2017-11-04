@@ -30,7 +30,7 @@ struct pseudo_header
 /*
     Generic checksum calculation function
 */
-char [] readFileToSend(int * nbrPacket,char nameFile[]){
+char[] readFileToSend(int * nbrPacket,char nameFile[]){
     FILE* fichier = NULL;
     int div = 0;
     char dt[10000];
@@ -58,19 +58,21 @@ char [] readFileToSend(int * nbrPacket,char nameFile[]){
             div++;  //--> si le modulo n'est pas égal à 0, on incrémente le nombre de packet
         } 
 
-        char *tabPayload[div];
+        pack tabPayload;
+    //    char *tabPayload[div];
         
         int oct = 0;
         int cpt;
         for(cpt = 0; cpt < div; cpt++){
 
-            tabPayload[cpt] = malloc(5);
+      //      tabPayload[cpt] = malloc(5);
+            tabPayload.packet[cpt] = malloc(5);
             fseek(fichier, oct, SEEK_SET);
             fread(tabPayload[cpt], 5, 1, fichier);
             oct = oct + 5 ;
             printf("%i\n",oct );
         }
-        printf("%s\n",tabPayload[3]);
+        printf("numéro trois :  %s\n",tabPayload.packet[3]);
         fclose(fichier);
         nbrPacket = &div;
         return tabPayload;

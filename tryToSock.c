@@ -104,7 +104,7 @@ ip->iph_tos = 16; // Low delay
 ip->iph_len = sizeof(struct ipheader) + sizeof(struct udpheader);
 ip->iph_ident = htons(54321);
 ip->iph_ttl = 64; // hops
-ip->iph_protocol = IPPROTO_UDP; // UDP
+ip->iph_protocol = 17; // UDP
 // Source IP address, can use spoofed address here!!!
 ip->iph_sourceip = inet_addr(argv[1]);
 // The destination IP address
