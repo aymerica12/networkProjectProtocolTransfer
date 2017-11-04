@@ -76,7 +76,6 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
           //  strcpy(tabPayload[cpt],*buffer);
             printf(" packet : %s \n",tabPayload[cpt]);
             oct = oct + 5 ;
-            cpt++;
         }
         printf("%s\n",payload[3].packet );
         fclose(fichier);
