@@ -7,7 +7,7 @@
 #define PTYPE_NACK 3
 #define MAX_WINDOW 5
     typedef struct pack{
-            char packet[]; 
+            char packet[520]; 
     }pack ;
 
 typedef struct __attribute__((__packed__)) pkt {
