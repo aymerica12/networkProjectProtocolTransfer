@@ -64,21 +64,17 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
         int oct = 0;
         int cpt;
         for(cpt = 0; cpt < div; cpt++){
-            printf("\n compt :  %i",cpt);
-            printf("\n div : %i",div);
 
             tabPayload[cpt] = malloc(5);
             fseek(fichier, oct, SEEK_SET);
-
             fread(tabPayload[cpt], 5, 1, fichier);
-            printf(" packet : %s \n",tabPayload[cpt]);
             oct = oct + 5 ;
             printf("%i\n",oct );
         }
         printf("%s\n",tabPayload[3]);
         fclose(fichier);
         nbrPacket = &div;
-        return *tabPayload;
+        return tabPayload;
     }
 
 }
