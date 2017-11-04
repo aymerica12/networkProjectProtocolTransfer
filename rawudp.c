@@ -58,7 +58,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
             div++;  //--> si le modulo n'est pas égal à 0, on incrémente le nombre de packet
         } 
 
-        char tabPayload[div];
+        char * tabPayload[div];
         pack payload[div];
         int oct = 0;
         int cpt =0;
@@ -71,7 +71,7 @@ char * readFileToSend(int * nbrPacket,char nameFile[]){
 
            //payload[div].packet = buffer; 
             //printf("%s\n", *buffer);
-            strcpy(tabPayload[cpt],* buffer);
+            strcpy(tabPayload[cpt],buffer);
             printf(" packet : %d\n", tabPayload[cpt]);
             oct = oct + 5 ;
             cpt++;
